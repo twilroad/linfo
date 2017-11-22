@@ -81,7 +81,7 @@ class Windows extends OS
     public function getOS()
     {
         foreach ($this->wmi->ExecQuery('SELECT Caption FROM Win32_OperatingSystem') as $os) {
-            return $os->Caption;
+            return iconv("GB2312", "UTF-8", $os->Caption);
         }
 
         return 'Windows';
@@ -412,8 +412,8 @@ class Windows extends OS
             $manufacturer = $pnpdev->Manufacturer;
             $caption = $pnpdev->Caption;
             if (function_exists('iconv')) {
-                $manufacturer = iconv('Windows-1252', 'UTF-8//TRANSLIT', $manufacturer);
-                $caption = iconv('Windows-1252', 'UTF-8//TRANSLIT', $caption);
+                $manufacturer = iconv('GB2312', 'UTF-8', $manufacturer);
+                $caption = iconv('GB2312', 'UTF-8', $caption);
             }
             $devs[] = array(
                 'vendor' => $manufacturer,
